@@ -4,164 +4,160 @@ import Link from "next/link";
 export const metadata: Metadata = {
   title: "Franchise Opportunity",
   description:
-    "Start your own Taste of Traditions franchise. Join India's fastest-growing cloud kitchen focused on authentic and lost recipes.",
-  keywords: [
-    "cloud kitchen franchise India",
-    "food franchise opportunity",
-    "Taste of Traditions franchise",
-    "restaurant franchise India",
-    "start food business",
-  ],
+    "Start your own Taste of Traditions franchise and build a profitable cloud kitchen business.",
 };
 
 export default function Franchise() {
   return (
-    <main className="bg-white text-gray-900">
+    <main className="relative bg-gradient-to-br from-orange-50 via-yellow-50 to-red-50 text-gray-900 overflow-hidden">
 
-      {/* HERO SECTION */}
-      <section className="relative bg-gradient-to-r from-orange-200 via-yellow-100 to-orange-300 py-24 text-center">
+      {/* 🔥 BACKGROUND GLOW */}
+      <div className="absolute top-0 left-0 w-[500px] h-[500px] bg-yellow-300 opacity-20 blur-3xl rounded-full"></div>
+      <div className="absolute bottom-0 right-0 w-[400px] h-[400px] bg-orange-300 opacity-20 blur-3xl rounded-full"></div>
+
+      {/* HERO */}
+      <section className="relative py-28 text-center px-6">
         <h1 className="text-4xl md:text-6xl font-extrabold">
-          Start Your Own Food Empire 🍲
+          Build Your Food Empire 🍲
         </h1>
+
         <p className="mt-6 text-lg max-w-2xl mx-auto text-gray-700">
-          Partner with Taste of Traditions and bring authentic Indian flavors
-          to your city. Build a profitable cloud kitchen business with us.
+          Join Taste of Traditions and start your own profitable cloud kitchen.
         </p>
 
         <Link
           href="#apply"
-          className="inline-block mt-8 bg-black text-white px-8 py-3 rounded-xl font-semibold hover:scale-105 transition"
+          className="inline-block mt-8 bg-black text-white px-8 py-3 rounded-xl font-semibold hover:scale-105 transition shadow-lg"
         >
-          Apply for Franchise
+          Apply Now
         </Link>
       </section>
 
-      {/* WHY JOIN US */}
-      <section className="px-6 md:px-16 py-20 bg-gray-50">
-        <h2 className="text-3xl font-bold text-center">
-          Why Choose Taste of Traditions?
-        </h2>
-
-        <div className="grid md:grid-cols-3 gap-8 mt-12">
-          <div className="p-6 bg-white rounded-2xl shadow hover:shadow-lg transition">
-            <h3 className="text-xl font-semibold">Proven Concept</h3>
-            <p className="mt-3 text-gray-600">
-              A unique cloud kitchen model focused on lost recipes and authentic
-              Indian flavors that customers love.
-            </p>
-          </div>
-
-          <div className="p-6 bg-white rounded-2xl shadow hover:shadow-lg transition">
-            <h3 className="text-xl font-semibold">Low Investment</h3>
-            <p className="mt-3 text-gray-600">
-              Start your own kitchen with minimal investment and maximum returns.
-            </p>
-          </div>
-
-          <div className="p-6 bg-white rounded-2xl shadow hover:shadow-lg transition">
-            <h3 className="text-xl font-semibold">Full Support</h3>
-            <p className="mt-3 text-gray-600">
-              Get training, branding, operations, and marketing support from our team.
-            </p>
-          </div>
-        </div>
-      </section>
-
-      {/* BUSINESS MODEL */}
+      {/* WHY JOIN */}
       <section className="px-6 md:px-16 py-20">
         <h2 className="text-3xl font-bold text-center">
-          Our Business Model
+          Why Choose Us?
         </h2>
 
-        <p className="mt-6 text-center max-w-3xl mx-auto text-gray-600">
-          Taste of Traditions operates as a cloud kitchen, meaning you don’t need
-          expensive dine-in spaces. Focus on delivery and maximize profits.
-        </p>
-
-        <div className="grid md:grid-cols-3 gap-8 mt-12 text-center">
-          <div>
-            <h3 className="text-xl font-semibold">Setup</h3>
-            <p className="mt-2 text-gray-600">
-              Small kitchen setup with essential equipment.
-            </p>
-          </div>
-
-          <div>
-            <h3 className="text-xl font-semibold">Operations</h3>
-            <p className="mt-2 text-gray-600">
-              Manage orders via Swiggy, Zomato, and direct website.
-            </p>
-          </div>
-
-          <div>
-            <h3 className="text-xl font-semibold">Growth</h3>
-            <p className="mt-2 text-gray-600">
-              Expand into multiple outlets and scale quickly.
-            </p>
-          </div>
+        <div className="grid md:grid-cols-3 gap-10 mt-12">
+          {[
+            "Proven Business Model",
+            "Low Investment",
+            "Full Support",
+          ].map((title, i) => (
+            <div
+              key={i}
+              className="bg-white/60 backdrop-blur-xl p-8 rounded-3xl shadow-xl hover:shadow-2xl hover:-translate-y-2 transition"
+            >
+              <h3 className="text-xl font-semibold text-orange-600">
+                {title}
+              </h3>
+              <p className="mt-3 text-gray-600">
+                Build and scale your own food business easily.
+              </p>
+            </div>
+          ))}
         </div>
       </section>
 
-      {/* INVESTMENT SECTION */}
+      {/* MODEL */}
+      <section className="px-6 md:px-16 py-20 text-center">
+        <h2 className="text-3xl font-bold">
+          Simple Business Model
+        </h2>
+
+        <div className="grid md:grid-cols-3 gap-10 mt-12">
+          {["Setup", "Operate", "Scale"].map((step, i) => (
+            <div key={i}>
+              <h3 className="text-xl font-semibold">{step}</h3>
+              <p className="text-gray-600 mt-2">
+                Easy to start and grow quickly.
+              </p>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* INVESTMENT */}
       <section className="px-6 md:px-16 py-20 bg-black text-white text-center">
         <h2 className="text-3xl font-bold">
-          Investment & Returns
+          Investment Overview
         </h2>
 
-        <p className="mt-6 max-w-2xl mx-auto text-gray-300">
-          Start your franchise with affordable investment and achieve
-          high-profit margins with our proven model.
-        </p>
-
         <div className="mt-10 grid md:grid-cols-3 gap-8">
-          <div className="bg-white text-black p-6 rounded-xl">
-            <h3 className="font-bold text-xl">₹2L – ₹5L</h3>
-            <p>Initial Investment</p>
-          </div>
-
-          <div className="bg-white text-black p-6 rounded-xl">
-            <h3 className="font-bold text-xl">3–6 Months</h3>
-            <p>Break-even Time</p>
-          </div>
-
-          <div className="bg-white text-black p-6 rounded-xl">
-            <h3 className="font-bold text-xl">High ROI</h3>
-            <p>Scalable Profit Model</p>
-          </div>
+          {[
+            "₹2L – ₹5L",
+            "3–6 Months",
+            "High ROI",
+          ].map((item, i) => (
+            <div
+              key={i}
+              className="bg-white text-black p-6 rounded-xl shadow-xl hover:scale-105 transition"
+            >
+              <h3 className="font-bold text-xl">{item}</h3>
+            </div>
+          ))}
         </div>
       </section>
 
-      {/* APPLICATION FORM */}
-      <section id="apply" className="px-6 md:px-16 py-20">
+      {/* 🔥 PREMIUM FINAL SECTION */}
+      <section className="relative px-6 md:px-16 pt-24 pb-32 bg-gradient-to-b from-black via-black to-white text-white">
+
+        <div className="text-center max-w-3xl mx-auto">
+          <h2 className="text-4xl font-bold">
+            Start Your Journey Today 🚀
+          </h2>
+
+          <p className="mt-4 text-gray-300">
+            Become part of India’s growing food revolution.
+          </p>
+
+          <Link
+            href="#apply"
+            className="inline-block mt-8 bg-yellow-400 text-black px-10 py-4 rounded-xl font-semibold shadow-xl hover:scale-105 transition"
+          >
+            Apply Now
+          </Link>
+        </div>
+
+        {/* TRUST CARDS */}
+        <div className="mt-20 grid md:grid-cols-3 gap-6 max-w-5xl mx-auto">
+          {[
+            { title: "📈 High Growth", desc: "Scalable model" },
+            { title: "🤝 Full Support", desc: "We guide you" },
+            { title: "🔥 Trending Market", desc: "Cloud kitchens booming" },
+          ].map((item, i) => (
+            <div
+              key={i}
+              className="bg-white text-black p-6 rounded-2xl text-center shadow-xl hover:scale-105 transition"
+            >
+              <h3 className="font-bold text-lg">{item.title}</h3>
+              <p className="text-sm text-gray-600 mt-2">{item.desc}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* 🤍 WHITE END */}
+      <section className="bg-white py-20 text-center">
+        <h3 className="text-2xl font-semibold text-gray-800">
+          Taste of Traditions — Building Food Entrepreneurs
+        </h3>
+      </section>
+
+      {/* FORM */}
+      <section id="apply" className="px-6 md:px-16 py-20 bg-white">
         <h2 className="text-3xl font-bold text-center">
           Apply for Franchise
         </h2>
 
         <form className="max-w-2xl mx-auto mt-10 space-y-6">
-          <input
-            className="w-full border p-3 rounded-lg"
-            placeholder="Full Name"
-          />
-          <input
-            className="w-full border p-3 rounded-lg"
-            placeholder="Email Address"
-          />
-          <input
-            className="w-full border p-3 rounded-lg"
-            placeholder="City"
-          />
-          <input
-            className="w-full border p-3 rounded-lg"
-            placeholder="Investment Budget"
-          />
-
-          <textarea
-            className="w-full border p-3 rounded-lg"
-            placeholder="Why do you want to join?"
-          />
-
-          <button className="w-full bg-black text-white py-3 rounded-lg font-semibold hover:scale-105 transition">
-            Submit Application
+          <input className="w-full border p-3 rounded-lg" placeholder="Name" />
+          <input className="w-full border p-3 rounded-lg" placeholder="Email" />
+          <input className="w-full border p-3 rounded-lg" placeholder="City" />
+          <textarea className="w-full border p-3 rounded-lg" placeholder="Message" />
+          <button className="w-full bg-black text-white py-3 rounded-lg hover:scale-105 transition">
+            Submit
           </button>
         </form>
       </section>
