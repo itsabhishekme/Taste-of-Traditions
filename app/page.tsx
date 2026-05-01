@@ -3,72 +3,74 @@ import Hero from "@/components/Hero";
 import Link from "next/link";
 
 export const metadata: Metadata = {
-  title: "Home",
+  title: "Taste of Traditions",
   description:
-    "Taste of Traditions brings lost Indian recipes and authentic homemade food to your doorstep.",
+    "Authentic Indian heritage recipes and homemade food delivered with love.",
 };
 
 export default function Home() {
   return (
-    <main className="relative bg-gradient-to-br from-orange-50 via-yellow-50 to-red-50 text-gray-900 overflow-hidden">
+    <main className="relative overflow-hidden bg-gradient-to-br from-orange-50 via-yellow-50 to-red-50 text-gray-900">
 
-      {/* 🔥 BACKGROUND GLOW */}
-      <div className="absolute top-0 left-0 w-[500px] h-[500px] bg-yellow-300 opacity-20 blur-3xl rounded-full"></div>
-      <div className="absolute bottom-0 right-0 w-[400px] h-[400px] bg-orange-300 opacity-20 blur-3xl rounded-full"></div>
+      {/* 🔥 ANIMATED BACKGROUND BLOBS */}
+      <div className="absolute top-[-100px] left-[-100px] w-[500px] h-[500px] bg-orange-300 opacity-20 blur-3xl rounded-full animate-pulse"></div>
+      <div className="absolute bottom-[-120px] right-[-100px] w-[500px] h-[500px] bg-pink-300 opacity-20 blur-3xl rounded-full animate-pulse"></div>
 
       {/* HERO */}
       <Hero />
 
-      {/* INTRO */}
-      <section className="relative px-6 md:px-16 py-20 text-center">
-        <h2 className="text-4xl md:text-5xl font-extrabold">
-          Reviving Lost Recipes 🍲
+      {/* 🔥 BRAND STORY */}
+      <section className="px-6 md:px-16 py-24 text-center">
+        <h2 className="text-4xl md:text-6xl font-extrabold leading-tight">
+          More Than Food.
+          <span className="block text-orange-600">It’s Heritage 🍲</span>
         </h2>
 
-        <p className="mt-6 text-lg text-gray-600 max-w-2xl mx-auto">
-          We bring forgotten Indian flavors back to life with authentic,
-          homemade meals crafted from heritage recipes passed through generations.
+        <p className="mt-6 max-w-2xl mx-auto text-lg text-gray-600">
+          Taste of Traditions isn’t just about meals — it’s about reviving memories,
+          preserving culture, and reconnecting with flavors lost in time.
         </p>
 
         <div className="mt-10 flex justify-center gap-4 flex-wrap">
           <Link
             href="/recipes"
-            className="bg-black text-white px-6 py-3 rounded-xl shadow-lg hover:scale-105 transition"
+            className="px-8 py-3 rounded-xl bg-black text-white shadow-xl hover:scale-105 transition"
           >
             Explore Recipes
           </Link>
 
           <Link
             href="/cloud-kitchen"
-            className="border border-black px-6 py-3 rounded-xl hover:bg-black hover:text-white transition"
+            className="px-8 py-3 rounded-xl border border-black hover:bg-black hover:text-white transition"
           >
-            Order Food
+            Order Now 🍛
           </Link>
         </div>
       </section>
 
-      {/* FEATURES */}
+      {/* 🔥 FEATURES GRID */}
       <section className="px-6 md:px-16 py-20">
         <div className="grid md:grid-cols-3 gap-10">
+
           {[
             {
               title: "🍲 Authentic Recipes",
-              desc: "Rediscover rare and lost recipes from Indian villages.",
+              desc: "Rare dishes from forgotten Indian kitchens.",
             },
             {
-              title: "❤️ Homemade Quality",
-              desc: "Prepared with love using traditional techniques.",
+              title: "👵 Traditional Cooking",
+              desc: "Prepared with age-old techniques and love.",
             },
             {
-              title: "🚀 Cloud Kitchen",
-              desc: "Enjoy authentic food delivered to your doorstep.",
+              title: "🚀 Fast Delivery",
+              desc: "Fresh meals delivered to your doorstep.",
             },
           ].map((item, i) => (
             <div
               key={i}
-              className="bg-white/60 backdrop-blur-xl border p-8 rounded-3xl shadow-xl hover:shadow-2xl transition hover:-translate-y-2"
+              className="group bg-white/60 backdrop-blur-xl p-8 rounded-3xl shadow-xl border hover:shadow-2xl transition hover:-translate-y-2"
             >
-              <h3 className="text-xl font-semibold text-orange-600">
+              <h3 className="text-xl font-semibold text-orange-600 group-hover:scale-105 transition">
                 {item.title}
               </h3>
               <p className="mt-4 text-gray-600">{item.desc}</p>
@@ -77,39 +79,65 @@ export default function Home() {
         </div>
       </section>
 
-      {/* MID CTA */}
-      <section className="px-6 md:px-16 py-20 text-center">
-        <div className="bg-gradient-to-r from-orange-500 to-yellow-400 text-white p-12 rounded-3xl shadow-2xl">
-          <h2 className="text-3xl md:text-4xl font-bold">
-            Taste Heritage Like Never Before
+      {/* 🔥 PARALLAX STYLE SECTION */}
+      <section className="relative py-32 text-center bg-gradient-to-r from-orange-500 to-pink-500 text-white overflow-hidden">
+
+        <div className="absolute inset-0 bg-black/20"></div>
+
+        <div className="relative max-w-3xl mx-auto px-6">
+          <h2 className="text-4xl md:text-5xl font-bold">
+            Every Bite Tells a Story
           </h2>
 
-          <p className="mt-4 max-w-xl mx-auto text-white/90">
-            Step into a world of forgotten flavors and rediscover India's culinary roots.
+          <p className="mt-6 text-lg text-white/90">
+            From forgotten village kitchens to your plate — we bring the soul of India back.
           </p>
 
           <Link
             href="/recipes"
-            className="inline-block mt-6 bg-white text-black px-8 py-3 rounded-xl font-semibold hover:scale-105 transition"
+            className="inline-block mt-8 bg-white text-black px-8 py-3 rounded-xl font-semibold hover:scale-105 transition"
           >
-            Browse Recipes
+            Discover Now
           </Link>
         </div>
       </section>
 
-      {/* 🔥 PREMIUM FINAL SECTION */}
-      <section className="relative px-6 md:px-16 pt-24 pb-32 bg-gradient-to-b from-black via-black to-white text-white">
+      {/* 🔥 TRUST SECTION */}
+      <section className="px-6 md:px-16 py-24 bg-white">
+        <h2 className="text-center text-3xl md:text-4xl font-bold">
+          Why People Love Us ❤️
+        </h2>
 
-        {/* Glow */}
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[400px] h-[400px] bg-yellow-400 opacity-20 blur-3xl rounded-full"></div>
+        <div className="mt-16 grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
 
-        <div className="relative text-center max-w-3xl mx-auto">
-          <h2 className="text-3xl md:text-5xl font-extrabold">
-            Ready to Experience Real Taste?
+          {[
+            { title: "⭐ 4.9 Rating", desc: "Highly loved by customers" },
+            { title: "🍲 100+ Recipes", desc: "Authentic traditional dishes" },
+            { title: "🚀 Fast Delivery", desc: "Fresh & quick service" },
+          ].map((item, i) => (
+            <div
+              key={i}
+              className="p-8 bg-gray-50 rounded-2xl shadow hover:shadow-xl transition text-center"
+            >
+              <h3 className="font-bold text-lg">{item.title}</h3>
+              <p className="text-gray-600 mt-2">{item.desc}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* 🔥 FINAL CTA */}
+      <section className="relative px-6 md:px-16 py-32 bg-black text-white text-center">
+
+        <div className="absolute inset-0 bg-gradient-to-r from-orange-500/20 to-pink-500/20 blur-3xl"></div>
+
+        <div className="relative max-w-2xl mx-auto">
+          <h2 className="text-4xl md:text-5xl font-extrabold">
+            Ready to Taste Real India?
           </h2>
 
           <p className="mt-6 text-gray-300 text-lg">
-            Join our journey of reviving India’s lost food culture.
+            Join our journey and experience authentic flavors like never before.
           </p>
 
           <Link
@@ -119,34 +147,17 @@ export default function Home() {
             Order Now 🍛
           </Link>
         </div>
-
-        {/* TRUST CARDS */}
-        <div className="mt-20 grid md:grid-cols-3 gap-6 max-w-5xl mx-auto">
-          {[
-            { title: "⭐ 4.9 Rating", desc: "Loved by customers" },
-            { title: "🍲 100+ Recipes", desc: "Traditional dishes" },
-            { title: "🚀 Fast Delivery", desc: "Fresh & quick" },
-          ].map((item, i) => (
-            <div
-              key={i}
-              className="bg-white text-black p-6 rounded-2xl shadow-xl text-center hover:scale-105 transition"
-            >
-              <h3 className="font-bold text-lg">{item.title}</h3>
-              <p className="text-sm text-gray-600 mt-2">{item.desc}</p>
-            </div>
-          ))}
-        </div>
       </section>
 
-      {/* 🤍 BEAUTIFUL WHITE END */}
-      <section className="bg-white py-20 text-center">
+      {/* 🔥 FOOTER */}
+      <footer className="bg-white py-16 text-center">
         <h3 className="text-2xl font-semibold text-gray-800">
-          Taste of Traditions — Bringing Heritage Back to Life
+          Taste of Traditions
         </h3>
         <p className="mt-4 text-gray-500">
-          Crafted with love, tradition, and authenticity.
+          Bringing India’s lost flavors back to life 🇮🇳
         </p>
-      </section>
+      </footer>
 
     </main>
   );

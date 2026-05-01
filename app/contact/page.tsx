@@ -2,44 +2,75 @@
 
 import { useState } from "react";
 
+/* 🔥 INLINE ICONS (NO DEPENDENCY) */
+const UserIcon = () => (
+  <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="2">
+    <path d="M12 12c2.7 0 5-2.3 5-5s-2.3-5-5-5-5 2.3-5 5 2.3 5 5 5z" />
+    <path d="M2 22c0-4 4-7 10-7s10 3 10 7" />
+  </svg>
+);
+
+const MailIcon = () => (
+  <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="2">
+    <path d="M4 4h16v16H4z" />
+    <path d="M22 6l-10 7L2 6" />
+  </svg>
+);
+
+/* 🔥 TYPES */
+type FormData = {
+  name: string;
+  email: string;
+  message: string;
+};
+
+type Errors = Partial<FormData>;
+
 export default function ContactForm() {
-  const [form, setForm] = useState({
+  const [form, setForm] = useState<FormData>({
     name: "",
     email: "",
     message: "",
   });
 
-  const [errors, setErrors] = useState<any>({});
-  const [submitted, setSubmitted] = useState(false);
+  const [errors, setErrors] = useState<Errors>({});
   const [loading, setLoading] = useState(false);
+  const [submitted, setSubmitted] = useState(false);
+  const [toast, setToast] = useState("");
 
-  const handleChange = (e: any) => {
-    setForm({
-      ...form,
-      [e.target.name]: e.target.value,
-    });
+  /* 🔥 INPUT HANDLER */
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    const { name, value } = e.target;
 
-    setErrors({
-      ...errors,
-      [e.target.name]: "",
-    });
+    setForm((prev) => ({ ...prev, [name]: value }));
+    setErrors((prev) => ({ ...prev, [name]: "" }));
   };
 
-  const validate = () => {
-    let newErrors: any = {};
+  /* 🔥 VALIDATION */
+  const validate = (): Errors => {
+    const newErrors: Errors = {};
 
     if (!form.name.trim()) newErrors.name = "Name is required";
-    if (!form.email.trim()) newErrors.email = "Email is required";
-    else if (!/\S+@\S+\.\S+/.test(form.email))
-      newErrors.email = "Invalid email format";
 
-    if (!form.message.trim())
-      newErrors.message = "Message cannot be empty";
+    if (!form.email.trim()) {
+      newErrors.email = "Email is required";
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email)) {
+      newErrors.email = "Invalid email";
+    }
+
+    if (!form.message.trim()) {
+      newErrors.message = "Message required";
+    } else if (form.message.length < 10) {
+      newErrors.message = "Minimum 10 characters";
+    }
 
     return newErrors;
   };
 
-  const handleSubmit = async (e: any) => {
+  /* 🔥 SUBMIT */
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     const validationErrors = validate();
@@ -49,160 +80,170 @@ export default function ContactForm() {
       return;
     }
 
-    setLoading(true);
+    try {
+      setLoading(true);
 
-    setTimeout(() => {
-      setLoading(false);
+      await new Promise((res) => setTimeout(res, 1200));
+
       setSubmitted(true);
-    }, 1500);
+      setToast("Message sent successfully 🚀");
+
+      setTimeout(() => setToast(""), 3000);
+
+      setForm({ name: "", email: "", message: "" });
+
+    } catch (err) {
+      setToast("Something went wrong ❌");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
-    <main className="relative min-h-screen bg-gradient-to-br from-orange-50 via-yellow-50 to-red-50 overflow-hidden">
+    <main className="min-h-screen flex items-center justify-center bg-gradient-to-br from-orange-100 via-pink-100 to-purple-100 px-6">
 
-      {/* 🔥 BACKGROUND GLOW */}
-      <div className="absolute top-0 left-0 w-[500px] h-[500px] bg-yellow-300 opacity-20 blur-3xl rounded-full"></div>
-      <div className="absolute bottom-0 right-0 w-[400px] h-[400px] bg-red-300 opacity-20 blur-3xl rounded-full"></div>
-
-      <section className="relative flex items-center justify-center px-6 py-20">
-
-        <div className="w-full max-w-2xl">
-
-          {/* HEADER */}
-          <div className="text-center mb-12">
-            <h1 className="text-4xl md:text-5xl font-extrabold text-gray-900">
-              Contact Us ✉️
-            </h1>
-            <p className="mt-4 text-gray-600">
-              Have questions or ideas? Let’s build something amazing together.
-            </p>
-          </div>
-
-          {/* CARD */}
-          <div className="bg-white/60 backdrop-blur-xl border border-white/30 p-10 rounded-3xl shadow-2xl">
-
-            {submitted ? (
-              <div className="text-center py-16">
-                <div className="text-6xl mb-4 animate-bounce">🎉</div>
-                <h2 className="text-2xl font-bold text-green-600">
-                  Message Sent Successfully!
-                </h2>
-                <p className="text-gray-600 mt-3">
-                  We’ll get back to you very soon.
-                </p>
-
-                <button
-                  onClick={() => {
-                    setSubmitted(false);
-                    setForm({ name: "", email: "", message: "" });
-                  }}
-                  className="mt-6 px-6 py-2 bg-black text-white rounded-full hover:scale-105 transition"
-                >
-                  Send Another Message
-                </button>
-              </div>
-            ) : (
-              <form onSubmit={handleSubmit} className="space-y-6">
-
-                {/* NAME */}
-                <div>
-                  <label className="text-sm font-medium text-gray-700">
-                    Full Name
-                  </label>
-                  <input
-                    type="text"
-                    name="name"
-                    value={form.name}
-                    onChange={handleChange}
-                    placeholder="Enter your name"
-                    className={`w-full mt-2 p-3 rounded-xl border ${
-                      errors.name ? "border-red-500" : "border-gray-300"
-                    } focus:ring-2 focus:ring-orange-400`}
-                  />
-                  {errors.name && (
-                    <p className="text-red-500 text-sm mt-1">
-                      {errors.name}
-                    </p>
-                  )}
-                </div>
-
-                {/* EMAIL */}
-                <div>
-                  <label className="text-sm font-medium text-gray-700">
-                    Email Address
-                  </label>
-                  <input
-                    type="email"
-                    name="email"
-                    value={form.email}
-                    onChange={handleChange}
-                    placeholder="Enter your email"
-                    className={`w-full mt-2 p-3 rounded-xl border ${
-                      errors.email ? "border-red-500" : "border-gray-300"
-                    } focus:ring-2 focus:ring-orange-400`}
-                  />
-                  {errors.email && (
-                    <p className="text-red-500 text-sm mt-1">
-                      {errors.email}
-                    </p>
-                  )}
-                </div>
-
-                {/* MESSAGE */}
-                <div>
-                  <label className="text-sm font-medium text-gray-700">
-                    Message
-                  </label>
-                  <textarea
-                    name="message"
-                    rows={5}
-                    value={form.message}
-                    onChange={handleChange}
-                    placeholder="Write your message..."
-                    className={`w-full mt-2 p-3 rounded-xl border ${
-                      errors.message ? "border-red-500" : "border-gray-300"
-                    } focus:ring-2 focus:ring-orange-400`}
-                  />
-                  {errors.message && (
-                    <p className="text-red-500 text-sm mt-1">
-                      {errors.message}
-                    </p>
-                  )}
-                </div>
-
-                {/* BUTTON */}
-                <button
-                  type="submit"
-                  disabled={loading}
-                  className="w-full py-3 rounded-xl bg-black text-white font-semibold hover:scale-[1.02] transition flex items-center justify-center gap-2"
-                >
-                  {loading ? (
-                    <>
-                      <span className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></span>
-                      Sending...
-                    </>
-                  ) : (
-                    "Send Message"
-                  )}
-                </button>
-
-              </form>
-            )}
-          </div>
-
+      {/* 🔔 TOAST */}
+      {toast && (
+        <div className="fixed top-6 right-6 bg-black text-white px-4 py-2 rounded-lg shadow-lg animate-bounce z-50">
+          {toast}
         </div>
-      </section>
+      )}
 
-      {/* 🔥 PREMIUM BOTTOM */}
-      <section className="bg-gradient-to-b from-transparent to-white py-20 text-center">
-        <h3 className="text-2xl font-semibold text-gray-800">
-          Taste of Traditions — We Value Every Connection
-        </h3>
-        <p className="mt-3 text-gray-500">
-          Your message matters. Let’s build something meaningful.
+      <div className="w-full max-w-3xl">
+
+        {/* HEADER */}
+        <div className="text-center mb-10">
+          <h1 className="text-5xl font-bold bg-gradient-to-r from-orange-500 to-pink-500 bg-clip-text text-transparent">
+            Contact Us
+          </h1>
+          <p className="text-gray-600 mt-2">
+            Let’s build something meaningful together 🚀
+          </p>
+        </div>
+
+        {/* CARD */}
+        <div className="bg-white/40 backdrop-blur-2xl border border-white/20 rounded-3xl shadow-2xl p-10">
+
+          {submitted ? (
+            <SuccessState onReset={() => setSubmitted(false)} />
+          ) : (
+            <form onSubmit={handleSubmit} className="space-y-6">
+
+              <InputField
+                label="Full Name"
+                name="name"
+                value={form.name}
+                error={errors.name}
+                onChange={handleChange}
+                icon={<UserIcon />}
+              />
+
+              <InputField
+                label="Email Address"
+                name="email"
+                value={form.email}
+                error={errors.email}
+                onChange={handleChange}
+                icon={<MailIcon />}
+              />
+
+              <TextareaField
+                label="Message"
+                name="message"
+                value={form.message}
+                error={errors.message}
+                onChange={handleChange}
+              />
+
+              {/* BUTTON */}
+              <button
+                disabled={loading}
+                className="w-full py-3 rounded-xl bg-gradient-to-r from-orange-500 to-pink-500 text-white font-semibold hover:scale-[1.03] active:scale-[0.97] transition-all"
+              >
+                {loading ? "Sending..." : "Send Message 🚀"}
+              </button>
+
+            </form>
+          )}
+        </div>
+
+        {/* FOOTER */}
+        <p className="text-center text-sm mt-6 text-gray-500">
+          Taste of Traditions — Every message matters ❤️
         </p>
-      </section>
 
+      </div>
     </main>
+  );
+}
+
+/* 🔹 INPUT */
+function InputField({ label, name, value, error, onChange, icon }: any) {
+  return (
+    <div className="relative">
+      <div className="absolute left-3 top-3 text-gray-400">{icon}</div>
+
+      <input
+        name={name}
+        value={value}
+        onChange={onChange}
+        placeholder={label}
+        className={`w-full pl-10 p-3 rounded-xl border transition ${
+          error ? "border-red-500" : "border-gray-300"
+        } focus:ring-2 focus:ring-orange-400 outline-none`}
+      />
+
+      {error && <p className="text-red-500 text-sm mt-1">{error}</p>}
+    </div>
+  );
+}
+
+/* 🔹 TEXTAREA */
+function TextareaField({
+  label,
+  name,
+  value,
+  error,
+  onChange,
+}: any) {
+  return (
+    <div>
+      <textarea
+        name={name}
+        value={value}
+        onChange={onChange}
+        rows={5}
+        maxLength={200}
+        placeholder={label}
+        className={`w-full p-3 rounded-xl border ${
+          error ? "border-red-500" : "border-gray-300"
+        } focus:ring-2 focus:ring-orange-400 outline-none`}
+      />
+
+      <div className="flex justify-between text-xs mt-1 text-gray-400">
+        <span>{error}</span>
+        <span>{value.length}/200</span>
+      </div>
+    </div>
+  );
+}
+
+/* 🔹 SUCCESS */
+function SuccessState({ onReset }: { onReset: () => void }) {
+  return (
+    <div className="text-center py-12">
+      <div className="text-6xl animate-bounce">🎉</div>
+
+      <h2 className="text-2xl font-bold text-green-500 mt-4">
+        Message Sent Successfully!
+      </h2>
+
+      <button
+        onClick={onReset}
+        className="mt-6 px-6 py-2 rounded-full bg-black text-white hover:scale-105 transition"
+      >
+        Send Another
+      </button>
+    </div>
   );
 }
