@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 
-/* 🔥 INLINE ICONS (NO DEPENDENCY) */
+/* ---------------- ICONS ---------------- */
 const UserIcon = () => (
   <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="2">
     <path d="M12 12c2.7 0 5-2.3 5-5s-2.3-5-5-5-5 2.3-5 5 2.3 5 5 5z" />
@@ -17,15 +17,14 @@ const MailIcon = () => (
   </svg>
 );
 
-/* 🔥 TYPES */
+/* ---------------- TYPES ---------------- */
 type FormData = {
   name: string;
   email: string;
   message: string;
 };
 
-type Errors = Partial<FormData>;
-
+/* ---------------- MAIN ---------------- */
 export default function ContactForm() {
   const [form, setForm] = useState<FormData>({
     name: "",
@@ -33,134 +32,117 @@ export default function ContactForm() {
     message: "",
   });
 
-  const [errors, setErrors] = useState<Errors>({});
   const [loading, setLoading] = useState(false);
-  const [submitted, setSubmitted] = useState(false);
   const [toast, setToast] = useState("");
+  const [submitted, setSubmitted] = useState(false);
 
-  /* 🔥 INPUT HANDLER */
-  const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => {
-    const { name, value } = e.target;
-
-    setForm((prev) => ({ ...prev, [name]: value }));
-    setErrors((prev) => ({ ...prev, [name]: "" }));
-  };
-
-  /* 🔥 VALIDATION */
-  const validate = (): Errors => {
-    const newErrors: Errors = {};
-
-    if (!form.name.trim()) newErrors.name = "Name is required";
-
-    if (!form.email.trim()) {
-      newErrors.email = "Email is required";
-    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email)) {
-      newErrors.email = "Invalid email";
+  /* ---------------- VALIDATION ---------------- */
+  const validate = () => {
+    if (!form.name || !form.email || !form.message) {
+      setToast("All fields required ⚠️");
+      return false;
     }
 
-    if (!form.message.trim()) {
-      newErrors.message = "Message required";
-    } else if (form.message.length < 10) {
-      newErrors.message = "Minimum 10 characters";
+    if (!form.email.includes("@")) {
+      setToast("Invalid email ❌");
+      return false;
     }
 
-    return newErrors;
+    return true;
   };
 
-  /* 🔥 SUBMIT */
-  const handleSubmit = async (e: React.FormEvent) => {
+  /* ---------------- HANDLERS ---------------- */
+  const handleChange = (e: any) => {
+    setForm({ ...form, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = async (e: any) => {
     e.preventDefault();
 
-    const validationErrors = validate();
-
-    if (Object.keys(validationErrors).length > 0) {
-      setErrors(validationErrors);
-      return;
-    }
+    if (!validate()) return;
 
     try {
       setLoading(true);
 
-      await new Promise((res) => setTimeout(res, 1200));
+      await fetch("/api/contact", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(form),
+      });
 
       setSubmitted(true);
-      setToast("Message sent successfully 🚀");
-
-      setTimeout(() => setToast(""), 3000);
+      setToast("Message sent 🚀");
 
       setForm({ name: "", email: "", message: "" });
 
-    } catch (err) {
-      setToast("Something went wrong ❌");
+      setTimeout(() => setToast(""), 3000);
+    } catch {
+      setToast("Error ❌");
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <main className="min-h-screen flex items-center justify-center bg-gradient-to-br from-orange-100 via-pink-100 to-purple-100 px-6">
+    <main className="min-h-screen flex items-center justify-center bg-gradient-to-br from-orange-100 via-pink-100 to-purple-100 px-6 py-16 relative overflow-hidden">
 
-      {/* 🔔 TOAST */}
+      {/* TOAST */}
       {toast && (
-        <div className="fixed top-6 right-6 bg-black text-white px-4 py-2 rounded-lg shadow-lg animate-bounce z-50">
+        <div className="fixed top-6 right-6 bg-black text-white px-5 py-3 rounded-xl shadow-xl z-50">
           {toast}
         </div>
       )}
 
-      <div className="w-full max-w-3xl">
+      <div className="w-full max-w-5xl">
 
         {/* HEADER */}
-        <div className="text-center mb-10">
-          <h1 className="text-5xl font-bold bg-gradient-to-r from-orange-500 to-pink-500 bg-clip-text text-transparent">
-            Contact Us
+        <div className="text-center mb-14">
+          <h1 className="text-6xl font-extrabold bg-gradient-to-r from-orange-500 to-purple-500 bg-clip-text text-transparent">
+            Get in Touch
           </h1>
-          <p className="text-gray-600 mt-2">
-            Let’s build something meaningful together 🚀
+          <p className="text-gray-600 mt-4 text-lg">
+            We’d love to hear your thoughts ✨
           </p>
         </div>
 
         {/* CARD */}
-        <div className="bg-white/40 backdrop-blur-2xl border border-white/20 rounded-3xl shadow-2xl p-10">
+        <div className="bg-white/40 backdrop-blur-2xl rounded-3xl shadow-2xl p-12">
 
           {submitted ? (
             <SuccessState onReset={() => setSubmitted(false)} />
           ) : (
-            <form onSubmit={handleSubmit} className="space-y-6">
+            <form onSubmit={handleSubmit} className="space-y-10">
 
-              <InputField
+              <FloatingInput
+                icon={<UserIcon />}
                 label="Full Name"
                 name="name"
                 value={form.name}
-                error={errors.name}
                 onChange={handleChange}
-                icon={<UserIcon />}
               />
 
-              <InputField
+              <FloatingInput
+                icon={<MailIcon />}
                 label="Email Address"
                 name="email"
                 value={form.email}
-                error={errors.email}
                 onChange={handleChange}
-                icon={<MailIcon />}
               />
 
-              <TextareaField
+              <FloatingTextarea
                 label="Message"
                 name="message"
                 value={form.message}
-                error={errors.message}
                 onChange={handleChange}
               />
 
-              {/* BUTTON */}
               <button
                 disabled={loading}
-                className="w-full py-3 rounded-xl bg-gradient-to-r from-orange-500 to-pink-500 text-white font-semibold hover:scale-[1.03] active:scale-[0.97] transition-all"
+                className="w-full py-4 rounded-2xl font-semibold text-white text-lg bg-gradient-to-r from-orange-500 via-pink-500 to-purple-500 hover:scale-[1.02] transition"
               >
-                {loading ? "Sending..." : "Send Message 🚀"}
+                {loading ? "Sending..." : "Send Message"}
               </button>
 
             </form>
@@ -168,79 +150,88 @@ export default function ContactForm() {
         </div>
 
         {/* FOOTER */}
-        <p className="text-center text-sm mt-6 text-gray-500">
-          Taste of Traditions — Every message matters ❤️
+        <p className="text-center text-sm mt-10 text-gray-600">
+          Taste of Traditions — Crafted with ❤️
         </p>
-
       </div>
     </main>
   );
 }
 
-/* 🔹 INPUT */
-function InputField({ label, name, value, error, onChange, icon }: any) {
+/* ---------------- INPUT ---------------- */
+function FloatingInput({ icon, label, name, value, onChange }: any) {
+  const id = `input-${name}`;
+
   return (
     <div className="relative">
-      <div className="absolute left-3 top-3 text-gray-400">{icon}</div>
+      <div className="absolute left-4 top-4 text-gray-400">{icon}</div>
 
       <input
+        id={id}                         // ✅ FIX
         name={name}
         value={value}
         onChange={onChange}
-        placeholder={label}
-        className={`w-full pl-10 p-3 rounded-xl border transition ${
-          error ? "border-red-500" : "border-gray-300"
-        } focus:ring-2 focus:ring-orange-400 outline-none`}
+        required
+        placeholder=" "                 // ✅ required for floating label
+        aria-label={label}              // ✅ accessibility
+        className="peer w-full pl-12 p-4 pt-6 rounded-xl bg-white/70 border border-transparent focus:border-orange-400 focus:ring-2 focus:ring-orange-300 outline-none transition"
       />
 
-      {error && <p className="text-red-500 text-sm mt-1">{error}</p>}
+      <label
+        htmlFor={id}                   // ✅ FIX
+        className="absolute left-12 top-2 text-sm text-gray-500 transition-all 
+        peer-placeholder-shown:top-4 peer-placeholder-shown:text-base 
+        peer-focus:top-2 peer-focus:text-sm"
+      >
+        {label}
+      </label>
     </div>
   );
 }
 
-/* 🔹 TEXTAREA */
-function TextareaField({
-  label,
-  name,
-  value,
-  error,
-  onChange,
-}: any) {
+/* ---------------- TEXTAREA ---------------- */
+function FloatingTextarea({ label, name, value, onChange }: any) {
+  const id = `textarea-${name}`;
+
   return (
-    <div>
+    <div className="relative">
       <textarea
+        id={id}                        // ✅ FIX
         name={name}
         value={value}
         onChange={onChange}
         rows={5}
-        maxLength={200}
-        placeholder={label}
-        className={`w-full p-3 rounded-xl border ${
-          error ? "border-red-500" : "border-gray-300"
-        } focus:ring-2 focus:ring-orange-400 outline-none`}
+        maxLength={300}
+        required
+        placeholder="Your Message..." // ✅ required for axe
+        aria-label={label}
+        className="w-full p-4 rounded-xl bg-white/70 border border-transparent focus:border-orange-400 focus:ring-2 focus:ring-orange-300 outline-none transition"
       />
 
-      <div className="flex justify-between text-xs mt-1 text-gray-400">
-        <span>{error}</span>
-        <span>{value.length}/200</span>
+      <label htmlFor={id} className="sr-only">
+        {label}
+      </label>
+
+      <div className="text-right text-sm text-gray-500 mt-1">
+        {value.length}/300
       </div>
     </div>
   );
 }
 
-/* 🔹 SUCCESS */
-function SuccessState({ onReset }: { onReset: () => void }) {
+/* ---------------- SUCCESS ---------------- */
+function SuccessState({ onReset }: any) {
   return (
-    <div className="text-center py-12">
-      <div className="text-6xl animate-bounce">🎉</div>
+    <div className="text-center py-16">
+      <div className="text-7xl">🚀</div>
 
-      <h2 className="text-2xl font-bold text-green-500 mt-4">
-        Message Sent Successfully!
+      <h2 className="text-3xl font-bold text-green-500 mt-6">
+        Message Delivered!
       </h2>
 
       <button
         onClick={onReset}
-        className="mt-6 px-6 py-2 rounded-full bg-black text-white hover:scale-105 transition"
+        className="mt-8 px-8 py-3 rounded-full bg-black text-white hover:scale-105 transition"
       >
         Send Another
       </button>
