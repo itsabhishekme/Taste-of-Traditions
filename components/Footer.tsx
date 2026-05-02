@@ -64,9 +64,9 @@ export default function Footer() {
   };
 
   return (
-    <footer className="relative mt-28 text-gray-300 overflow-hidden">
-
-      {/* 🌌 MULTI-LAYER BACKGROUND */}
+    <footer className="relative mt-auto text-gray-300 overflow-hidden">
+      
+      {/* 🌌 BACKGROUND */}
       <div className="absolute inset-0 bg-gradient-to-br from-black via-gray-950 to-black"></div>
 
       <div className="absolute w-full h-full opacity-20">
@@ -74,7 +74,7 @@ export default function Footer() {
         <div className="absolute w-[500px] h-[500px] bg-orange-500 blur-[180px] rounded-full bottom-0 right-0"></div>
       </div>
 
-      {/* 🔥 CTA SECTION */}
+      {/* 🔥 CTA */}
       <div className="relative max-w-5xl mx-auto px-6 pt-16 text-center">
         <motion.h2
           initial={{ opacity: 0, y: 30 }}
@@ -88,10 +88,7 @@ export default function Footer() {
           Join our journey of rediscovering lost recipes and timeless flavors.
         </p>
 
-        <motion.div
-          whileHover={{ scale: 1.05 }}
-          className="inline-block"
-        >
+        <motion.div whileHover={{ scale: 1.05 }} className="inline-block">
           <Link
             href="/menu"
             className="bg-yellow-400 text-black px-8 py-3 rounded-full font-semibold hover:bg-yellow-300 transition"
@@ -101,14 +98,14 @@ export default function Footer() {
         </motion.div>
       </div>
 
-      {/* 🌟 MAIN GRID */}
+      {/* 🌟 GRID */}
       <motion.div
         variants={container}
         initial="hidden"
         whileInView="show"
         className="relative max-w-7xl mx-auto px-6 py-20 grid grid-cols-1 md:grid-cols-4 gap-14"
       >
-        {/* 🟡 BRAND */}
+        {/* BRAND */}
         <motion.div variants={item}>
           <h2 className="text-3xl font-extrabold text-yellow-400 mb-4">
             Taste of Traditions
@@ -124,7 +121,7 @@ export default function Footer() {
           </div>
         </motion.div>
 
-        {/* 🔗 LINKS */}
+        {/* LINKS */}
         <motion.div variants={item}>
           <h3 className="text-lg font-semibold text-white mb-5">
             Quick Links
@@ -149,7 +146,7 @@ export default function Footer() {
           </ul>
         </motion.div>
 
-        {/* 🍽 SERVICES */}
+        {/* SERVICES */}
         <motion.div variants={item}>
           <h3 className="text-lg font-semibold text-white mb-5">
             Services
@@ -163,32 +160,27 @@ export default function Footer() {
               "Food Stories",
               "Franchise",
             ].map((service, i) => (
-              <li
-                key={i}
-                className="hover:text-yellow-400 transition"
-              >
+              <li key={i} className="hover:text-yellow-400 transition">
                 {service}
               </li>
             ))}
           </ul>
         </motion.div>
 
-        {/* 📩 NEWSLETTER */}
+        {/* NEWSLETTER */}
         <motion.div variants={item}>
           <h3 className="text-lg font-semibold text-white mb-5">
             Stay Connected
           </h3>
 
           <form onSubmit={handleSubscribe} className="space-y-4">
-            <div className="relative">
-              <input
-                type="email"
-                placeholder="Enter your email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                className="w-full px-4 py-3 rounded-xl bg-gray-900/60 border border-gray-700 focus:ring-2 focus:ring-yellow-400 outline-none"
-              />
-            </div>
+            <input
+              type="email"
+              placeholder="Enter your email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              className="w-full px-4 py-3 rounded-xl bg-gray-900/60 border border-gray-700 focus:ring-2 focus:ring-yellow-400 outline-none"
+            />
 
             <button
               disabled={loading}
@@ -222,7 +214,7 @@ export default function Footer() {
       {/* DIVIDER */}
       <div className="border-t border-gray-800"></div>
 
-      {/* 🔻 BOTTOM */}
+      {/* BOTTOM */}
       <div className="max-w-7xl mx-auto px-6 py-6 flex flex-col md:flex-row justify-between items-center text-sm text-gray-500">
         <p>© 2026 Taste of Traditions. All rights reserved.</p>
 

@@ -6,169 +6,184 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Recipes | Taste of Traditions",
   description:
-    "Explore authentic traditional Indian recipes revived from heritage kitchens.",
+    "Explore authentic traditional Indian recipes revived from heritage kitchens. Discover flavors, culture, and stories.",
 };
 
-export default function Recipes() {
+/* 🔥 REUSABLE CORE */
+
+function Container({ children, className = "" }: any) {
+  return <section className={`max-w-7xl mx-auto px-6 ${className}`}>{children}</section>;
+}
+
+function Button({ href, children, dark }: any) {
   return (
-    <main className="relative min-h-screen bg-gradient-to-br from-orange-50 via-yellow-50 to-red-50 overflow-hidden">
+    <Link
+      href={href}
+      className={`inline-block px-8 py-3 rounded-full font-semibold transition ${
+        dark
+          ? "bg-black text-white hover:scale-105"
+          : "bg-orange-500 text-white hover:bg-orange-600"
+      }`}
+    >
+      {children}
+    </Link>
+  );
+}
 
-      {/* 🔥 MULTI LAYER BACKGROUND */}
-      <div className="absolute top-0 left-0 w-[600px] h-[600px] bg-yellow-300 opacity-20 blur-3xl rounded-full animate-pulse"></div>
-      <div className="absolute bottom-0 right-0 w-[500px] h-[500px] bg-red-300 opacity-20 blur-3xl rounded-full"></div>
+function RecipeCard({ recipe }: any) {
+  return (
+    <Link href={`/recipes/${recipe.id}`} className="group">
+      <article className="bg-white/80 backdrop-blur-xl rounded-2xl overflow-hidden shadow-md hover:shadow-2xl transition hover:-translate-y-2">
 
-      <div className="relative max-w-7xl mx-auto px-6 py-16">
+        <div className="relative h-56">
+          <Image
+            src={recipe.image || "/fallback.jpg"}
+            alt={recipe.name}
+            fill
+            className="object-cover group-hover:scale-110 transition duration-700"
+          />
+        </div>
 
-        {/* HEADER */}
-        <header className="text-center max-w-3xl mx-auto">
-          <h1 className="text-4xl md:text-6xl font-extrabold text-gray-900">
-            Discover Authentic Recipes
-          </h1>
-          <p className="mt-4 text-lg text-gray-600">
-            Explore traditional Indian recipes revived with love and heritage.
+        <div className="p-5">
+          <h3 className="text-lg font-bold group-hover:text-orange-600">
+            {recipe.name}
+          </h3>
+
+          <p className="text-sm text-gray-600 mt-2 line-clamp-3">
+            {recipe.description}
           </p>
-        </header>
 
-        {/* 🔥 FEATURED SECTION */}
-        <section className="mt-16 grid md:grid-cols-2 gap-10 items-center">
+          <div className="mt-4 flex justify-between">
+            <span className="text-xs text-gray-400">Traditional</span>
+            <span className="text-sm text-orange-600 font-semibold">
+              View →
+            </span>
+          </div>
+        </div>
+      </article>
+    </Link>
+  );
+}
 
-          <div className="relative h-[350px] rounded-3xl overflow-hidden shadow-2xl">
-            <Image
-              src={recipes[0]?.image || "/fallback.jpg"}
-              alt="Featured Recipe"
-              fill
-              className="object-cover"
-            />
+/* 🔥 MAIN PAGE */
+
+export default function Recipes() {
+  const featured = recipes[0];
+
+  return (
+    <main className="bg-gradient-to-b from-orange-50 via-yellow-50 to-white text-gray-900">
+
+      {/* 🌟 HERO */}
+      <div className="relative py-24 text-center overflow-hidden">
+        <div className="absolute w-[600px] h-[600px] bg-orange-300 blur-3xl opacity-20 rounded-full top-[-150px] left-[-150px]" />
+        <div className="absolute w-[500px] h-[500px] bg-yellow-300 blur-3xl opacity-20 rounded-full bottom-[-150px] right-[-150px]" />
+
+        <h1 className="text-4xl md:text-6xl font-extrabold">
+          Authentic Indian Recipes 🍛
+        </h1>
+
+        <p className="mt-6 max-w-2xl mx-auto text-gray-600 text-lg">
+          Experience flavors passed through generations — real, emotional, unforgettable.
+        </p>
+
+        <div className="mt-10 flex justify-center px-6">
+          <input
+            placeholder="Search recipes..."
+            className="w-full max-w-md px-6 py-3 rounded-full border shadow focus:outline-none focus:ring-2 focus:ring-orange-400"
+          />
+        </div>
+      </div>
+
+      {/* ⭐ FEATURED */}
+      {featured && (
+        <Container className="py-16 grid md:grid-cols-2 gap-12 items-center">
+          <div className="relative h-[420px] rounded-3xl overflow-hidden shadow-xl">
+            <Image src={featured.image} alt={featured.name} fill className="object-cover" />
           </div>
 
           <div>
-            <h2 className="text-3xl font-bold text-gray-900">
+            <span className="text-orange-500 uppercase text-sm font-semibold">
               Featured Recipe
-            </h2>
-            <p className="mt-4 text-gray-600">
-              {recipes[0]?.description}
-            </p>
+            </span>
 
-            <Link
-              href={`/recipes/${recipes[0]?.id}`}
-              className="inline-block mt-6 bg-black text-white px-6 py-3 rounded-xl hover:scale-105 transition"
-            >
-              View Recipe
-            </Link>
+            <h2 className="text-4xl font-bold mt-2">{featured.name}</h2>
+
+            <p className="mt-4 text-gray-600">{featured.description}</p>
+
+            <Button href={`/recipes/${featured.id}`} dark>
+              View Recipe →
+            </Button>
           </div>
+        </Container>
+      )}
 
-        </section>
+      {/* 📊 TRUST STATS */}
+      <Container className="py-10 grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
+        {[
+          { value: "100+", label: "Recipes" },
+          { value: "4.9⭐", label: "User Rating" },
+          { value: "1000+", label: "Happy Foodies" },
+          { value: "10+", label: "Years Tradition" },
+        ].map((item, i) => (
+          <div key={i} className="bg-white rounded-xl p-6 shadow hover:shadow-lg transition">
+            <h3 className="text-2xl font-bold text-orange-600">{item.value}</h3>
+            <p className="text-gray-500 text-sm mt-1">{item.label}</p>
+          </div>
+        ))}
+      </Container>
 
-        {/* GRID */}
-        <section className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10 mt-20">
-          {recipes.map((recipe) => (
-            <Link key={recipe.id} href={`/recipes/${recipe.id}`} className="group">
-              
-              <article className="bg-white/70 backdrop-blur-xl border rounded-2xl shadow-lg overflow-hidden transition duration-300 hover:shadow-2xl hover:-translate-y-3">
-                
-                <div className="relative h-52 w-full">
-                  <Image
-                    src={recipe.image || "/fallback.jpg"}
-                    alt={recipe.name}
-                    fill
-                    className="object-cover group-hover:scale-110 transition duration-700"
-                  />
-                </div>
-
-                <div className="p-6">
-                  <h2 className="text-xl font-bold text-gray-900 group-hover:text-orange-600 transition">
-                    {recipe.name}
-                  </h2>
-
-                  <p className="mt-2 text-sm text-gray-600 line-clamp-3">
-                    {recipe.description}
-                  </p>
-
-                  <div className="mt-4 flex justify-between items-center">
-                    <span className="text-xs text-gray-500">
-                      Traditional Recipe
-                    </span>
-
-                    <span className="text-sm font-semibold text-orange-600 group-hover:underline">
-                      View →
-                    </span>
-                  </div>
-                </div>
-
-              </article>
-            </Link>
+      {/* 🍲 FILTER */}
+      <Container className="pb-6">
+        <div className="flex gap-3 overflow-x-auto">
+          {["All", "Breakfast", "Lunch", "Dinner", "Snacks"].map((cat) => (
+            <button
+              key={cat}
+              className="px-5 py-2 rounded-full bg-white shadow hover:bg-orange-500 hover:text-white transition"
+            >
+              {cat}
+            </button>
           ))}
-        </section>
+        </div>
+      </Container>
 
-        {/* MID CTA */}
-        <section className="mt-24 text-center bg-white/60 backdrop-blur-xl rounded-3xl p-12 shadow-xl">
-          <h2 className="text-3xl font-bold text-gray-900">
-            Want More Traditional Recipes?
-          </h2>
+      {/* 🧱 GRID */}
+      <Container className="py-16 grid sm:grid-cols-2 lg:grid-cols-3 gap-10">
+        {recipes.map((recipe) => (
+          <RecipeCard key={recipe.id} recipe={recipe} />
+        ))}
+      </Container>
 
-          <p className="mt-3 text-gray-600">
-            Join our community and discover hidden culinary gems.
-          </p>
+      {/* 🧡 TESTIMONIAL */}
+      <div className="bg-black text-white py-24 text-center px-6">
+        <h2 className="text-3xl md:text-5xl font-extrabold">
+          Loved by Food Lovers ❤️
+        </h2>
 
-          <Link
-            href="/contact"
-            className="inline-block mt-6 px-8 py-3 bg-orange-500 text-white rounded-full font-semibold hover:bg-orange-600 transition"
-          >
-            Join Now
-          </Link>
-        </section>
-
+        <p className="mt-6 max-w-2xl mx-auto text-gray-300">
+          “This is not just food — this is emotion, nostalgia, and home on a plate.”
+        </p>
       </div>
 
-      {/* 🔥 PREMIUM FINAL SECTION */}
-      <section className="relative px-6 md:px-16 pt-24 pb-32 bg-gradient-to-b from-black via-black to-white text-white">
+      {/* 🚀 CTA */}
+      <div className="py-20 text-center bg-gradient-to-r from-orange-500 to-red-500 text-white">
+        <h2 className="text-3xl md:text-4xl font-bold">
+          Craving Authentic Taste?
+        </h2>
 
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[400px] h-[400px] bg-yellow-400 opacity-20 blur-3xl rounded-full"></div>
-
-        <div className="relative text-center max-w-3xl mx-auto">
-          <h2 className="text-3xl md:text-5xl font-extrabold">
-            Keep Exploring Flavors 🍲
-          </h2>
-
-          <p className="mt-6 text-gray-300 text-lg">
-            Discover more recipes and reconnect with India’s culinary roots.
-          </p>
-
-          <Link
-            href="/cloud-kitchen"
-            className="inline-block mt-10 bg-yellow-400 text-black px-10 py-4 rounded-xl font-semibold shadow-xl hover:scale-105 transition"
-          >
-            Order Authentic Food
-          </Link>
-        </div>
-
-        {/* TRUST CARDS */}
-        <div className="mt-20 grid md:grid-cols-3 gap-6 max-w-5xl mx-auto">
-          {[
-            { title: "⭐ 4.9 Rating", desc: "Loved by food lovers" },
-            { title: "🍲 100+ Recipes", desc: "Traditional dishes" },
-            { title: "🚀 Fast Delivery", desc: "Fresh & quick" },
-          ].map((item, i) => (
-            <div
-              key={i}
-              className="bg-white text-black p-6 rounded-2xl shadow-xl text-center hover:scale-105 transition"
-            >
-              <h3 className="font-bold text-lg">{item.title}</h3>
-              <p className="text-sm text-gray-600 mt-2">{item.desc}</p>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      {/* 🤍 WHITE END */}
-      <section className="bg-white py-20 text-center">
-        <h3 className="text-2xl font-semibold text-gray-800">
-          Taste of Traditions — Bringing Heritage Back to Life
-        </h3>
-        <p className="mt-4 text-gray-500">
-          Crafted with love, tradition, and authenticity.
+        <p className="mt-4 text-white/80">
+          Order directly from our cloud kitchen and experience real flavor.
         </p>
-      </section>
+
+        <Button href="/cloud-kitchen">Order Now 🍲</Button>
+      </div>
+
+      {/* 📌 FLOATING CTA */}
+      <Link
+        href="/cloud-kitchen"
+        className="fixed bottom-6 right-6 bg-black text-white px-6 py-3 rounded-full shadow-xl hover:scale-110 transition z-50"
+      >
+        🍲 Order Food
+      </Link>
 
     </main>
   );
