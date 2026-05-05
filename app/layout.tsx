@@ -2,6 +2,7 @@ import "./globals.css";
 import type { Metadata, Viewport } from "next";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import { Analytics } from "@vercel/analytics/next";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://tasteoftraditions.in"),
@@ -36,7 +37,7 @@ export const metadata: Metadata = {
     siteName: "Taste of Traditions",
     images: [
       {
-        url: "/og-image.jpg", // add inside /public
+        url: "/og-image.jpg",
         width: 1200,
         height: 630,
         alt: "Taste of Traditions",
@@ -79,6 +80,7 @@ export default function RootLayout({
         <Navbar />
         <main>{children}</main>
         <Footer />
+        <Analytics />
       </body>
     </html>
   );
