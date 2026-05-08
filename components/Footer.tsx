@@ -3,26 +3,32 @@
 import Link from "next/link";
 import { useState } from "react";
 import { motion } from "framer-motion";
+
 import {
-  FaFacebook,
+  FaFacebookF,
   FaInstagram,
   FaTwitter,
   FaYoutube,
+  FaGooglePlay,
+  FaApple,
+  FaEnvelope,
+  FaPhoneAlt,
+  FaMapMarkerAlt,
 } from "react-icons/fa";
 
-/* ================= ANIMATION CONFIG ================= */
+/* ================= ANIMATION ================= */
 
 const container = {
   hidden: {},
   show: {
     transition: {
-      staggerChildren: 0.15,
+      staggerChildren: 0.12,
     },
   },
 };
 
 const item = {
-  hidden: { opacity: 0, y: 30 },
+  hidden: { opacity: 0, y: 25 },
   show: { opacity: 1, y: 0 },
 };
 
@@ -37,7 +43,7 @@ export default function Footer() {
     e.preventDefault();
 
     if (!email || !email.includes("@")) {
-      setStatus("⚠️ Please enter a valid email");
+      setStatus("⚠️ Please enter valid email");
       return;
     }
 
@@ -51,10 +57,10 @@ export default function Footer() {
       });
 
       if (res.ok) {
-        setStatus("✅ You're now part of our food story!");
+        setStatus("✅ Successfully subscribed");
         setEmail("");
       } else {
-        setStatus("❌ Something went wrong");
+        setStatus("❌ Subscription failed");
       }
     } catch {
       setStatus("🚨 Server error");
@@ -64,182 +70,349 @@ export default function Footer() {
   };
 
   return (
-    <footer className="relative mt-auto text-gray-300 overflow-hidden">
-      
-      {/* 🌌 BACKGROUND */}
-      <div className="absolute inset-0 bg-gradient-to-br from-black via-gray-950 to-black"></div>
+    <footer className="relative overflow-hidden bg-black text-gray-300">
 
-      <div className="absolute w-full h-full opacity-20">
-        <div className="absolute w-[600px] h-[600px] bg-yellow-400 blur-[180px] rounded-full -top-40 -left-40"></div>
-        <div className="absolute w-[500px] h-[500px] bg-orange-500 blur-[180px] rounded-full bottom-0 right-0"></div>
-      </div>
+      {/* ================= BACKGROUND ================= */}
 
-      {/* 🔥 CTA */}
-      <div className="relative max-w-5xl mx-auto px-6 pt-16 text-center">
-        <motion.h2
-          initial={{ opacity: 0, y: 30 }}
+      <div className="absolute inset-0 bg-gradient-to-br from-yellow-500/10 via-orange-500/5 to-red-500/10" />
+
+      <div className="absolute -top-32 -left-32 w-[450px] h-[450px] bg-yellow-500/20 rounded-full blur-[150px]" />
+
+      <div className="absolute bottom-0 right-0 w-[450px] h-[450px] bg-orange-500/20 rounded-full blur-[150px]" />
+
+      {/* ================= TOP CTA ================= */}
+
+      <section className="relative max-w-7xl mx-auto px-6 pt-14">
+
+        <motion.div
+          initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
-          className="text-3xl md:text-4xl font-bold text-white mb-4"
+          transition={{ duration: 0.7 }}
+          className="relative overflow-hidden rounded-[35px] border border-yellow-500/20 bg-white/5 backdrop-blur-2xl px-6 md:px-14 py-12"
         >
-          Bring Tradition Back to Your Plate 🍲
-        </motion.h2>
 
-        <p className="text-gray-400 mb-8 text-sm md:text-base">
-          Join our journey of rediscovering lost recipes and timeless flavors.
-        </p>
+          <div className="absolute inset-0 bg-gradient-to-r from-yellow-500/10 via-orange-500/10 to-red-500/10" />
 
-        <motion.div whileHover={{ scale: 1.05 }} className="inline-block">
-          <Link
-            href="/menu"
-            className="bg-yellow-400 text-black px-8 py-3 rounded-full font-semibold hover:bg-yellow-300 transition"
-          >
-            Explore Menu →
-          </Link>
+          <div className="relative z-10 flex flex-col lg:flex-row items-center justify-between gap-10">
+
+            {/* LEFT */}
+
+            <div className="max-w-2xl">
+
+              <h2 className="text-4xl md:text-5xl font-black text-white leading-tight">
+                Taste The Real
+                <span className="block text-yellow-400">
+                  Indian Tradition 🍛
+                </span>
+              </h2>
+
+              <p className="mt-5 text-gray-300 text-base leading-relaxed">
+                Discover timeless recipes, handmade flavors, and authentic
+                Indian culinary experiences delivered fresh to your table.
+              </p>
+
+              <div className="flex flex-wrap gap-4 mt-8">
+
+                <motion.div whileHover={{ scale: 1.05 }}>
+                  <Link
+                    href="/menu"
+                    className="bg-yellow-400 hover:bg-yellow-300 text-black px-8 py-4 rounded-full font-bold transition"
+                  >
+                    Explore Menu →
+                  </Link>
+                </motion.div>
+
+                <motion.div whileHover={{ scale: 1.05 }}>
+                  <Link
+                    href="/contact"
+                    className="border border-yellow-400/30 bg-white/5 hover:bg-white/10 text-white px-8 py-4 rounded-full font-semibold transition"
+                  >
+                    Contact Us
+                  </Link>
+                </motion.div>
+
+              </div>
+            </div>
+
+            {/* RIGHT APP DOWNLOAD */}
+
+            <div className="w-full lg:w-[350px] space-y-4">
+
+              {/* GOOGLE PLAY */}
+
+              <motion.a
+                whileHover={{ scale: 1.03 }}
+                href="https://play.google.com"
+                target="_blank"
+                className="group flex items-center justify-between bg-white/5 hover:bg-white/10 border border-gray-700 hover:border-yellow-400/40 p-5 rounded-3xl transition"
+              >
+
+                <div className="flex items-center gap-4">
+
+                  <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-green-400 to-green-600 flex items-center justify-center text-2xl text-white shadow-lg">
+                    <FaGooglePlay />
+                  </div>
+
+                  <div>
+                    <p className="text-xs text-gray-400">
+                      GET IT ON
+                    </p>
+
+                    <h4 className="text-white text-xl font-bold">
+                      Google Play
+                    </h4>
+                  </div>
+
+                </div>
+
+                <span className="text-yellow-400 text-xl group-hover:translate-x-1 transition">
+                  →
+                </span>
+
+              </motion.a>
+
+              {/* APP STORE */}
+
+              <motion.a
+                whileHover={{ scale: 1.03 }}
+                href="https://www.apple.com/app-store/"
+                target="_blank"
+                className="group flex items-center justify-between bg-white/5 hover:bg-white/10 border border-gray-700 hover:border-yellow-400/40 p-5 rounded-3xl transition"
+              >
+
+                <div className="flex items-center gap-4">
+
+                  <div className="w-14 h-14 rounded-2xl bg-white flex items-center justify-center text-2xl text-black shadow-lg">
+                    <FaApple />
+                  </div>
+
+                  <div>
+                    <p className="text-xs text-gray-400">
+                      DOWNLOAD ON THE
+                    </p>
+
+                    <h4 className="text-white text-xl font-bold">
+                      App Store
+                    </h4>
+                  </div>
+
+                </div>
+
+                <span className="text-yellow-400 text-xl group-hover:translate-x-1 transition">
+                  →
+                </span>
+
+              </motion.a>
+
+            </div>
+
+          </div>
         </motion.div>
-      </div>
+      </section>
 
-      {/* 🌟 GRID */}
-      <motion.div
+      {/* ================= MAIN FOOTER ================= */}
+
+      <motion.section
         variants={container}
         initial="hidden"
         whileInView="show"
-        className="relative max-w-7xl mx-auto px-6 py-20 grid grid-cols-1 md:grid-cols-4 gap-14"
+        className="relative max-w-7xl mx-auto px-6 py-16 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12"
       >
+
         {/* BRAND */}
+
         <motion.div variants={item}>
-          <h2 className="text-3xl font-extrabold text-yellow-400 mb-4">
+
+          <h2 className="text-3xl font-black text-yellow-400">
             Taste of Traditions
           </h2>
 
-          <p className="text-sm text-gray-400 leading-relaxed">
-            Preserving India's culinary heritage through authentic flavors,
-            storytelling, and timeless recipes.
+          <p className="mt-5 text-gray-400 leading-relaxed">
+            Preserving authentic Indian flavors through handcrafted recipes,
+            heritage cooking, and timeless traditions.
           </p>
 
-          <div className="mt-5 text-xs text-yellow-300 bg-yellow-400/10 border border-yellow-400/30 px-3 py-1 rounded-full inline-block">
-            Since 2024 • Handmade Recipes
+          {/* CONTACT */}
+
+          <div className="mt-8 space-y-4 text-sm">
+
+            <div className="flex items-center gap-3">
+              <FaMapMarkerAlt className="text-yellow-400" />
+              <span>Karnataka, India</span>
+            </div>
+
+            <div className="flex items-center gap-3">
+              <FaPhoneAlt className="text-yellow-400" />
+              <span>+91 7991185414</span>
+            </div>
+
+            <div className="flex items-center gap-3">
+              <FaEnvelope className="text-yellow-400" />
+              <span>support@tasteoftraditions.com</span>
+            </div>
+
           </div>
+
         </motion.div>
 
-        {/* LINKS */}
+        {/* QUICK LINKS */}
+
         <motion.div variants={item}>
-          <h3 className="text-lg font-semibold text-white mb-5">
+
+          <h3 className="text-xl font-bold text-white mb-6">
             Quick Links
           </h3>
 
-          <ul className="space-y-3 text-sm">
-            {["Home", "Menu", "About", "Contact", "Stories"].map(
-              (name, i) => (
-                <li key={i}>
-                  <Link
-                    href={`/${name.toLowerCase()}`}
-                    className="group relative"
-                  >
-                    <span className="group-hover:text-yellow-400 transition">
-                      {name}
-                    </span>
-                    <span className="absolute left-0 -bottom-1 w-0 h-[1px] bg-yellow-400 group-hover:w-full transition-all"></span>
-                  </Link>
-                </li>
-              )
-            )}
+          <ul className="space-y-4 text-gray-400">
+
+            {[
+              "Home",
+              "Menu",
+              "About",
+              "Gallery",
+              "Contact",
+              "Stories",
+            ].map((link, i) => (
+              <li key={i}>
+                <Link
+                  href={`/${link.toLowerCase()}`}
+                  className="hover:text-yellow-400 transition"
+                >
+                  {link}
+                </Link>
+              </li>
+            ))}
+
           </ul>
+
         </motion.div>
 
         {/* SERVICES */}
+
         <motion.div variants={item}>
-          <h3 className="text-lg font-semibold text-white mb-5">
+
+          <h3 className="text-xl font-bold text-white mb-6">
             Services
           </h3>
 
-          <ul className="space-y-3 text-sm text-gray-400">
+          <ul className="space-y-4 text-gray-400">
+
             {[
               "Cloud Kitchen",
-              "Catering",
+              "Traditional Catering",
               "Recipe Revival",
+              "Home Delivery",
               "Food Stories",
               "Franchise",
             ].map((service, i) => (
-              <li key={i} className="hover:text-yellow-400 transition">
+              <li
+                key={i}
+                className="hover:text-yellow-400 transition"
+              >
                 {service}
               </li>
             ))}
+
           </ul>
+
         </motion.div>
 
         {/* NEWSLETTER */}
+
         <motion.div variants={item}>
-          <h3 className="text-lg font-semibold text-white mb-5">
-            Stay Connected
+
+          <h3 className="text-xl font-bold text-white mb-6">
+            Newsletter
           </h3>
 
+          <p className="text-gray-400 text-sm mb-5">
+            Subscribe for food stories, offers & special recipes.
+          </p>
+
           <form onSubmit={handleSubscribe} className="space-y-4">
+
             <input
               type="email"
               placeholder="Enter your email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="w-full px-4 py-3 rounded-xl bg-gray-900/60 border border-gray-700 focus:ring-2 focus:ring-yellow-400 outline-none"
+              className="w-full px-5 py-4 rounded-2xl bg-white/5 border border-gray-700 focus:ring-2 focus:ring-yellow-400 outline-none"
             />
 
             <button
               disabled={loading}
-              className="w-full bg-yellow-400 text-black py-3 rounded-xl font-semibold hover:bg-yellow-300 transition disabled:opacity-50"
+              className="w-full bg-gradient-to-r from-yellow-400 to-orange-500 text-black py-4 rounded-2xl font-bold hover:opacity-90 transition"
             >
-              {loading ? "Subscribing..." : "Subscribe"}
+              {loading ? "Please wait..." : "Subscribe"}
             </button>
 
             {status && (
-              <p className="text-xs text-gray-400">{status}</p>
+              <p className="text-sm text-gray-400">
+                {status}
+              </p>
             )}
+
           </form>
 
           {/* SOCIAL */}
-          <div className="flex space-x-4 mt-6">
-            {[FaFacebook, FaInstagram, FaTwitter, FaYoutube].map(
-              (Icon, i) => (
-                <motion.a
-                  key={i}
-                  whileHover={{ scale: 1.3, rotate: 5 }}
-                  className="p-2 rounded-full bg-gray-800 hover:bg-yellow-400 hover:text-black transition"
-                >
-                  <Icon />
-                </motion.a>
-              )
-            )}
+
+          <div className="flex items-center gap-4 mt-8">
+
+            {[
+              FaFacebookF,
+              FaInstagram,
+              FaTwitter,
+              FaYoutube,
+            ].map((Icon, i) => (
+              <motion.a
+                key={i}
+                whileHover={{
+                  scale: 1.15,
+                  rotate: 6,
+                }}
+                className="w-12 h-12 rounded-full bg-white/5 border border-gray-700 hover:border-yellow-400 hover:bg-yellow-400 hover:text-black flex items-center justify-center transition"
+              >
+                <Icon />
+              </motion.a>
+            ))}
+
           </div>
+
         </motion.div>
-      </motion.div>
 
-      {/* DIVIDER */}
-      <div className="border-t border-gray-800"></div>
+      </motion.section>
 
-      {/* BOTTOM */}
-      <div className="max-w-7xl mx-auto px-6 py-6 flex flex-col md:flex-row justify-between items-center text-sm text-gray-500">
-        <p>© 2026 Taste of Traditions. All rights reserved.</p>
+      {/* ================= BOTTOM ================= */}
 
-        <div className="flex space-x-6 mt-3 md:mt-0">
-          <Link href="/privacy" className="hover:text-yellow-400">
-            Privacy
-          </Link>
-          <Link href="/terms" className="hover:text-yellow-400">
-            Terms
-          </Link>
+      <div className="relative border-t border-white/10">
+
+        <div className="max-w-7xl mx-auto px-6 py-5 flex flex-col md:flex-row items-center justify-between gap-4 text-sm text-gray-500">
+
+          <p>
+            © 2026 Taste of Traditions. All rights reserved.
+          </p>
+
+          <div className="flex items-center gap-6">
+
+            <Link
+              href="/privacy"
+              className="hover:text-yellow-400 transition"
+            >
+              Privacy Policy
+            </Link>
+
+            <Link
+              href="/terms"
+              className="hover:text-yellow-400 transition"
+            >
+              Terms & Conditions
+            </Link>
+
+          </div>
+
         </div>
       </div>
 
-      {/* SEO */}
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify({
-            "@context": "https://schema.org",
-            "@type": "Restaurant",
-            name: "Taste of Traditions",
-            servesCuisine: ["Indian Traditional"],
-          }),
-        }}
-      />
     </footer>
   );
 }
