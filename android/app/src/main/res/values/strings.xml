@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">taste-of-traditions</string>
+    <string name="title_activity_main">taste-of-traditions</string>
+    <string name="package_name">com.tasteoftraditions.app</string>
+    <string name="custom_url_scheme">com.tasteoftraditions.app</string>
+</resources>
