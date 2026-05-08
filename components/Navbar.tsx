@@ -4,7 +4,13 @@ import Link from "next/link";
 import { useState, useEffect } from "react";
 import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
-import { HiOutlineMenuAlt3, HiOutlineX } from "react-icons/hi";
+
+import {
+  HiOutlineMenuAlt3,
+  HiOutlineX,
+} from "react-icons/hi";
+
+import { FaGooglePlay } from "react-icons/fa";
 
 /* ================= ANIMATION ================= */
 
@@ -34,7 +40,9 @@ export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
 
   /* ROUTE CHANGE */
-  useEffect(() => setIsOpen(false), [pathname]);
+  useEffect(() => {
+    setIsOpen(false);
+  }, [pathname]);
 
   /* LOCK SCROLL */
   useEffect(() => {
@@ -44,16 +52,24 @@ export default function Navbar() {
   /* ESC CLOSE */
   useEffect(() => {
     const esc = (e: KeyboardEvent) => {
-      if (e.key === "Escape") setIsOpen(false);
+      if (e.key === "Escape") {
+        setIsOpen(false);
+      }
     };
+
     window.addEventListener("keydown", esc);
+
     return () => window.removeEventListener("keydown", esc);
   }, []);
 
   /* SCROLL EFFECT */
   useEffect(() => {
-    const scroll = () => setScrolled(window.scrollY > 10);
+    const scroll = () => {
+      setScrolled(window.scrollY > 10);
+    };
+
     window.addEventListener("scroll", scroll);
+
     return () => window.removeEventListener("scroll", scroll);
   }, []);
 
@@ -67,7 +83,10 @@ export default function Navbar() {
   ];
 
   const isActive = (href: string) => {
-    if (href === "/") return pathname === "/";
+    if (href === "/") {
+      return pathname === "/";
+    }
+
     return pathname.startsWith(href);
   };
 
@@ -75,11 +94,11 @@ export default function Navbar() {
     <header
       className={`sticky top-0 z-50 transition-all duration-300 ${
         scrolled
-          ? "bg-black border-b border-white/10 shadow-lg"
+          ? "bg-black border-b border-white/10 shadow-lg backdrop-blur-xl"
           : "bg-black"
       }`}
     >
-      {/* 🔥 PREMIUM GLOW LINE */}
+      {/* PREMIUM GLOW LINE */}
       <div className="absolute bottom-0 w-full h-[1px] bg-yellow-400/40" />
 
       <nav className="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
@@ -92,17 +111,20 @@ export default function Navbar() {
           Taste of Traditions
         </Link>
 
-        {/* DESKTOP */}
+        {/* DESKTOP MENU */}
         <div className="hidden md:flex items-center space-x-10">
 
           {navLinks.map((link) => {
             const active = isActive(link.href);
 
             return (
-              <div key={link.name} className="relative group">
+              <div
+                key={link.name}
+                className="relative group"
+              >
                 <Link
                   href={link.href}
-                  className={`relative z-10 px-2 ${
+                  className={`relative z-10 px-2 transition ${
                     active
                       ? "text-yellow-400"
                       : "text-gray-300 hover:text-yellow-400"
@@ -125,24 +147,58 @@ export default function Navbar() {
             );
           })}
 
-          {/* CTA */}
-          <motion.div whileHover={{ scale: 1.08 }}>
-            <Link
-              href="/cloud-kitchen"
-              className="relative px-6 py-2 rounded-xl bg-yellow-400 text-black font-semibold overflow-hidden"
-            >
-              <span className="relative z-10">Order Now</span>
-              <span className="absolute inset-0 bg-yellow-300 opacity-0 hover:opacity-20 transition" />
-            </Link>
-          </motion.div>
+          {/* PLAY STORE BUTTON */}
+          <motion.a
+            whileHover={{
+              scale: 1.06,
+              y: -2,
+            }}
+            whileTap={{
+              scale: 0.96,
+            }}
+            href="https://8opuur0zmvpuzm3m.public.blob.vercel-storage.com/app-debug.apk"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="group relative"
+          >
+            {/* GLOW */}
+            <div className="absolute inset-0 rounded-2xl bg-yellow-400 blur-xl opacity-20 group-hover:opacity-40 transition duration-500" />
+
+            {/* BUTTON */}
+            <div className="relative flex items-center gap-3 px-5 py-3 rounded-2xl bg-gradient-to-r from-yellow-400 to-yellow-300 text-black font-bold shadow-2xl border border-yellow-200 overflow-hidden">
+
+              {/* ICON */}
+              <div className="w-9 h-9 rounded-full bg-black/10 flex items-center justify-center">
+                <FaGooglePlay className="text-lg" />
+              </div>
+
+              {/* TEXT */}
+              <div className="flex flex-col leading-tight">
+                <span className="text-[10px] uppercase tracking-widest">
+                  Get it on
+                </span>
+
+                <span className="text-sm font-extrabold">
+                  Play Store
+                </span>
+              </div>
+
+              {/* SHINE EFFECT */}
+              <span className="absolute inset-0 -translate-x-full group-hover:translate-x-full bg-white/20 transition-transform duration-1000 skew-x-12" />
+            </div>
+          </motion.a>
         </div>
 
-        {/* MOBILE BUTTON */}
+        {/* MOBILE MENU BUTTON */}
         <button
           onClick={() => setIsOpen(!isOpen)}
           className="md:hidden text-3xl text-white"
         >
-          {isOpen ? <HiOutlineX /> : <HiOutlineMenuAlt3 />}
+          {isOpen ? (
+            <HiOutlineX />
+          ) : (
+            <HiOutlineMenuAlt3 />
+          )}
         </button>
       </nav>
 
@@ -185,10 +241,10 @@ export default function Navbar() {
                 >
                   <Link
                     href={link.href}
-                    className={`block text-lg ${
+                    className={`block text-lg transition ${
                       isActive(link.href)
                         ? "text-yellow-400"
-                        : "text-gray-300"
+                        : "text-gray-300 hover:text-yellow-400"
                     }`}
                   >
                     {link.name}
@@ -197,14 +253,18 @@ export default function Navbar() {
               ))}
             </div>
 
-            {/* CTA */}
+            {/* MOBILE PLAY STORE BUTTON */}
             <div className="mt-10">
-              <Link
-                href="/cloud-kitchen"
-                className="block text-center bg-yellow-400 text-black py-3 rounded-xl font-semibold"
+              <a
+                href="https://8opuur0zmvpuzm3m.public.blob.vercel-storage.com/app-debug.apk"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center justify-center gap-3 bg-gradient-to-r from-yellow-400 to-yellow-300 text-black py-4 rounded-2xl font-bold shadow-lg"
               >
-                Order Now
-              </Link>
+                <FaGooglePlay className="text-xl" />
+
+                <span>Download App</span>
+              </a>
             </div>
           </motion.div>
         )}
