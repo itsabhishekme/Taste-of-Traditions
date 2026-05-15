@@ -15,7 +15,9 @@ import {
   HiOutlineX,
 } from "react-icons/hi";
 
-import { FiArrowRight } from "react-icons/fi";
+import {
+  FiArrowRight,
+} from "react-icons/fi";
 
 /* ======================================================
    ANIMATIONS
@@ -224,20 +226,22 @@ export default function Navbar() {
       <header
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
           scrolled
-            ? "bg-black/80 backdrop-blur-2xl border-b border-white/10 shadow-[0_8px_40px_rgba(0,0,0,0.45)]"
-            : "bg-black/40 backdrop-blur-xl"
+            ? "bg-[#050505]/80 backdrop-blur-2xl border-b border-white/10 shadow-[0_10px_50px_rgba(0,0,0,0.45)]"
+            : "bg-black/20 backdrop-blur-xl"
         }`}
       >
 
         {/* ======================================================
-            BACKGROUND GLOW
+            BACKGROUND EFFECTS
         ====================================================== */}
 
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
 
-          <div className="absolute top-[-120px] left-[-120px] w-[260px] h-[260px] bg-yellow-400/10 rounded-full blur-[100px]" />
+          <div className="absolute top-[-120px] left-[-120px] w-[280px] h-[280px] bg-yellow-400/10 rounded-full blur-[120px]" />
 
-          <div className="absolute top-[-100px] right-[-100px] w-[240px] h-[240px] bg-orange-500/10 rounded-full blur-[100px]" />
+          <div className="absolute top-[-120px] right-[-120px] w-[260px] h-[260px] bg-orange-500/10 rounded-full blur-[120px]" />
+
+          <div className="absolute bottom-[-150px] left-1/2 -translate-x-1/2 w-[400px] h-[200px] bg-yellow-300/5 blur-[140px]" />
         </div>
 
         {/* ======================================================
@@ -250,74 +254,54 @@ export default function Navbar() {
             NAVBAR
         ====================================================== */}
 
-        <nav className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-[88px] flex items-center justify-between">
+        <nav className="relative max-w-7xl mx-auto px-5 sm:px-8 lg:px-10 h-[92px] flex items-center justify-between">
 
           {/* ======================================================
-              LOGO
+              BRAND
           ====================================================== */}
 
           <Link
             href="/"
-            className="relative group flex items-center gap-4 shrink-0"
+            className="relative group shrink-0"
           >
 
             {/* GLOW */}
-
-            <div className="absolute -inset-4 bg-yellow-400/10 blur-3xl opacity-0 group-hover:opacity-100 transition duration-700 rounded-full" />
-
-            {/* LOGO ICON */}
+            <div className="absolute -inset-6 bg-yellow-400/10 blur-3xl opacity-0 group-hover:opacity-100 transition duration-700 rounded-full" />
 
             <div className="relative">
 
-              <div className="absolute inset-0 rounded-full bg-gradient-to-r from-yellow-400 via-orange-400 to-yellow-300 blur-md opacity-60 group-hover:opacity-100 transition duration-500 animate-pulse" />
+              {/* TOP LABEL */}
+              <div className="flex items-center gap-3">
 
-              <div className="relative w-[58px] h-[58px] rounded-full bg-gradient-to-br from-[#FFD95A] via-[#FFB627] to-[#FF8A00] p-[2px] shadow-[0_12px_40px_rgba(255,180,0,0.35)]">
+                <div className="h-[1px] w-10 bg-gradient-to-r from-yellow-400 to-transparent" />
 
-                <div className="w-full h-full rounded-full bg-black flex items-center justify-center overflow-hidden border border-yellow-300/30">
-
-                  <div className="relative flex items-center justify-center">
-
-                    <div className="absolute w-10 h-10 bg-yellow-400/30 blur-xl rounded-full" />
-
-                    <span className="relative text-[26px]">
-                      🍛
-                    </span>
-                  </div>
-                </div>
-              </div>
-
-              {/* ONLINE DOT */}
-
-              <div className="absolute -top-1 -right-1 w-4 h-4 rounded-full bg-green-400 border-2 border-black animate-pulse" />
-            </div>
-
-            {/* BRAND */}
-
-            <div className="leading-none">
-
-              <div className="flex items-center gap-2">
-
-                <h2 className="text-[24px] md:text-[28px] font-black tracking-tight text-white">
-
-                  Taste of
-                </h2>
-
+                <span className="text-[10px] tracking-[0.35em] uppercase text-yellow-400 font-semibold">
                 
+                </span>
               </div>
 
-              <div className="flex items-center gap-3 mt-1">
+              {/* TITLE */}
+              <h1 className="mt-2 text-[30px] md:text-[40px] font-black tracking-tight leading-none">
 
-                <p className="text-yellow-400 font-bold text-sm md:text-base tracking-[0.32em] uppercase">
+                <span className="bg-gradient-to-r from-white via-yellow-100 to-yellow-400 bg-clip-text text-transparent">
+
+                  Taste
+                </span>
+
+                <span className="text-white mx-2">
+                  of
+                </span>
+
+                <span className="bg-gradient-to-r from-yellow-300 via-orange-300 to-yellow-500 bg-clip-text text-transparent">
 
                   Traditions
-                </p>
+                </span>
+              </h1>
 
-                <div className="hidden md:block h-[1px] w-14 bg-gradient-to-r from-yellow-400/70 to-transparent" />
-              </div>
+              {/* SUBTEXT */}
+              <p className="hidden md:block mt-2 text-[11px] tracking-[0.35em] uppercase text-gray-400">
 
-              <p className="hidden lg:block text-[11px] text-gray-500 mt-2 tracking-[0.22em] uppercase">
-
-                Authentic Indian Heritage
+                Authentic Indian Heritage Cuisine
               </p>
             </div>
           </Link>
@@ -330,9 +314,7 @@ export default function Navbar() {
 
             {navLinks.map((link) => {
               const active =
-                isActive(
-                  link.href
-                );
+                isActive(link.href);
 
               return (
                 <div
@@ -350,7 +332,7 @@ export default function Navbar() {
                         stiffness: 380,
                         damping: 30,
                       }}
-                      className="absolute inset-0 rounded-2xl bg-yellow-400/10 border border-yellow-400/20"
+                      className="absolute inset-0 rounded-2xl bg-yellow-400/10 border border-yellow-400/20 backdrop-blur-xl"
                     />
                   )}
 
@@ -361,7 +343,7 @@ export default function Navbar() {
                     className={`relative flex items-center justify-center px-5 py-3 rounded-2xl text-sm font-medium transition-all duration-300 ${
                       active
                         ? "text-yellow-400"
-                        : "text-gray-300 hover:text-yellow-400"
+                        : "text-gray-300 hover:text-yellow-400 hover:bg-white/5"
                     }`}
                   >
                     {link.name}
@@ -371,12 +353,12 @@ export default function Navbar() {
             })}
 
             {/* ======================================================
-                ORDER BUTTON
+                CTA BUTTON
             ====================================================== */}
 
             <motion.div
               whileHover={{
-                scale: 1.04,
+                scale: 1.05,
                 y: -2,
               }}
 
@@ -384,7 +366,7 @@ export default function Navbar() {
                 scale: 0.97,
               }}
 
-              className="ml-4"
+              className="ml-5"
             >
 
               <Link
@@ -392,10 +374,14 @@ export default function Navbar() {
                 className="group relative overflow-hidden"
               >
 
-                <div className="absolute inset-0 bg-yellow-400 blur-2xl opacity-20 group-hover:opacity-40 transition duration-500 rounded-2xl" />
+                {/* GLOW */}
+                <div className="absolute inset-0 bg-yellow-400 blur-2xl opacity-30 group-hover:opacity-50 transition duration-500 rounded-2xl" />
 
-                <div className="relative flex items-center gap-3 px-7 py-3 rounded-2xl bg-gradient-to-r from-yellow-400 via-orange-400 to-yellow-300 text-black font-bold shadow-[0_15px_40px_rgba(255,215,0,0.25)] overflow-hidden">
+                {/* BUTTON */}
 
+                <div className="relative flex items-center gap-3 px-8 py-3.5 rounded-2xl bg-gradient-to-r from-yellow-400 via-orange-400 to-yellow-300 text-black font-bold shadow-[0_15px_50px_rgba(255,200,0,0.25)] overflow-hidden">
+
+                  {/* SHINE */}
                   <span className="absolute inset-0 -translate-x-full group-hover:translate-x-full bg-white/20 transition-transform duration-1000 skew-x-12" />
 
                   <span className="relative z-10">
@@ -414,11 +400,9 @@ export default function Navbar() {
 
           <button
             onClick={() =>
-              setIsOpen(
-                !isOpen
-              )
+              setIsOpen(!isOpen)
             }
-            className="lg:hidden relative w-12 h-12 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-xl flex items-center justify-center text-white text-3xl shrink-0"
+            className="lg:hidden relative w-12 h-12 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-xl flex items-center justify-center text-white text-3xl"
           >
             {isOpen ? (
               <HiOutlineX />
@@ -455,17 +439,16 @@ export default function Navbar() {
       <AnimatePresence>
         {isOpen && (
           <motion.div
-            custom={1}
             variants={drawer}
             initial="hidden"
             animate="visible"
             exit="exit"
-            className="fixed top-0 right-0 w-[320px] max-w-full h-full bg-[#050505] border-l border-white/10 shadow-[0_20px_80px_rgba(0,0,0,0.55)] z-50 overflow-hidden"
+            className="fixed top-0 right-0 w-[320px] max-w-full h-full bg-[#050505] border-l border-white/10 shadow-[0_20px_80px_rgba(0,0,0,0.6)] z-50 overflow-hidden"
           >
 
-            {/* DRAWER GLOW */}
+            {/* GLOW */}
 
-            <div className="absolute top-[-120px] right-[-120px] w-[300px] h-[300px] bg-yellow-400/10 blur-[120px] rounded-full" />
+            <div className="absolute top-[-120px] right-[-120px] w-[320px] h-[320px] bg-yellow-400/10 blur-[120px] rounded-full" />
 
             {/* CONTENT */}
 
@@ -477,21 +460,32 @@ export default function Navbar() {
 
                 <div>
 
-                  <h2 className="text-2xl font-black text-white">
-                    Taste of
+                  <h2 className="text-3xl font-black leading-none">
+
+                    <span className="bg-gradient-to-r from-white via-yellow-100 to-yellow-400 bg-clip-text text-transparent">
+
+                      Taste
+                    </span>
+
+                    <span className="text-white mx-2">
+                      of
+                    </span>
+
+                    <span className="bg-gradient-to-r from-yellow-300 via-orange-300 to-yellow-500 bg-clip-text text-transparent">
+
+                      Traditions
+                    </span>
                   </h2>
 
-                  <p className="text-yellow-400 text-sm tracking-[0.25em] uppercase mt-1">
+                  <p className="mt-2 text-[10px] tracking-[0.30em] uppercase text-gray-400">
 
-                    Traditions
+                    Indian Heritage Cuisine
                   </p>
                 </div>
 
                 <button
                   onClick={() =>
-                    setIsOpen(
-                      false
-                    )
+                    setIsOpen(false)
                   }
                   className="w-11 h-11 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center text-white text-2xl"
                 >
@@ -499,44 +493,31 @@ export default function Navbar() {
                 </button>
               </div>
 
-              {/* LINKS */}
+              {/* NAVIGATION LINKS */}
 
               <div className="flex-1 mt-10 space-y-3">
 
                 {navLinks.map(
-                  (
-                    link,
-                    i
-                  ) => (
+                  (link, i) => (
                     <motion.div
-                      key={
-                        link.name
-                      }
+                      key={link.name}
                       custom={i}
-                      variants={
-                        navItem
-                      }
+                      variants={navItem}
                       initial="hidden"
                       animate="visible"
                     >
 
                       <Link
-                        href={
-                          link.href
-                        }
+                        href={link.href}
                         className={`flex items-center justify-between rounded-2xl px-5 py-4 transition-all duration-300 ${
-                          isActive(
-                            link.href
-                          )
+                          isActive(link.href)
                             ? "bg-yellow-400/10 text-yellow-400 border border-yellow-400/20"
                             : "text-gray-300 hover:bg-white/5 hover:text-yellow-400"
                         }`}
                       >
 
                         <span className="text-lg font-medium">
-                          {
-                            link.name
-                          }
+                          {link.name}
                         </span>
 
                         <FiArrowRight />
@@ -546,13 +527,13 @@ export default function Navbar() {
                 )}
               </div>
 
-              {/* MOBILE CTA */}
+              {/* CTA */}
 
               <div className="pt-6 border-t border-white/10">
 
                 <Link
                   href="/cloud-kitchen"
-                  className="group relative overflow-hidden flex items-center justify-center gap-3 bg-gradient-to-r from-yellow-400 via-orange-400 to-yellow-300 text-black py-4 rounded-2xl font-bold shadow-[0_15px_40px_rgba(255,215,0,0.25)]"
+                  className="group relative overflow-hidden flex items-center justify-center gap-3 bg-gradient-to-r from-yellow-400 via-orange-400 to-yellow-300 text-black py-4 rounded-2xl font-bold shadow-[0_15px_50px_rgba(255,200,0,0.25)]"
                 >
 
                   <span className="absolute inset-0 -translate-x-full group-hover:translate-x-full bg-white/20 transition-transform duration-1000 skew-x-12" />
@@ -564,16 +545,10 @@ export default function Navbar() {
                   <FiArrowRight className="relative z-10 text-lg" />
                 </Link>
 
-                
+                <p className="mt-6 text-center text-xs text-gray-500 tracking-[0.2em] uppercase">
 
-                <div className="mt-6 text-center text-xs text-gray-500">
-
-                
-
-                  <span className="ml-1 text-yellow-400 font-semibold">
-                 
-                  </span>
-                </div>
+                  Taste • Tradition • Luxury
+                </p>
               </div>
             </div>
           </motion.div>
@@ -584,7 +559,7 @@ export default function Navbar() {
           SPACER
       ====================================================== */}
 
-      <div className="h-[90px] lg:h-[88px]" />
+      <div className="h-[92px]" />
     </>
   );
 }

@@ -308,20 +308,48 @@ export default function Footer() {
           <ul className="space-y-4 text-gray-400">
 
             {[
-              "Home",
-              "Menu",
-              "About",
-              "Gallery",
-              "Contact",
-              "Stories",
+              {
+                name: "Home",
+                href: "/",
+              },
+
+              {
+                name: "Menu",
+                href: "/menu",
+              },
+
+              {
+                name: "About",
+                href: "/about",
+              },
+
+              {
+                name: "Gallery",
+                href: "/gallery",
+              },
+
+              {
+                name: "Contact",
+                href: "/contact",
+              },
+
+              {
+                name: "Stories",
+                href: "/stories",
+              },
             ].map((link, i) => (
               <li key={i}>
 
                 <Link
-                  href={`/${link.toLowerCase()}`}
-                  className="hover:text-yellow-400 transition"
+                  href={link.href}
+                  className="group inline-flex items-center gap-3 hover:text-yellow-400 transition duration-300"
                 >
-                  {link}
+
+                  <span className="w-0 group-hover:w-3 h-[1px] bg-yellow-400 transition-all duration-300" />
+
+                  <span>
+                    {link.name}
+                  </span>
                 </Link>
               </li>
             ))}
@@ -339,18 +367,49 @@ export default function Footer() {
           <ul className="space-y-4 text-gray-400">
 
             {[
-              "Cloud Kitchen",
-              "Traditional Catering",
-              "Recipe Revival",
-              "Home Delivery",
-              "Food Stories",
-              "Franchise",
+              {
+                name: "Cloud Kitchen",
+                href: "/cloud-kitchen",
+              },
+
+              {
+                name: "Traditional Catering",
+                href: "/services/traditional-catering",
+              },
+
+              {
+                name: "Recipe Revival",
+                href: "/services/recipe-revival",
+              },
+
+              {
+                name: "Home Delivery",
+                href: "/services/home-delivery",
+              },
+
+              {
+                name: "Food Stories",
+                href: "/services/food-stories",
+              },
+
+              {
+                name: "Franchise",
+                href: "/franchise",
+              },
             ].map((service, i) => (
-              <li
-                key={i}
-                className="hover:text-yellow-400 transition"
-              >
-                {service}
+              <li key={i}>
+
+                <Link
+                  href={service.href}
+                  className="group inline-flex items-center gap-3 hover:text-yellow-400 transition duration-300"
+                >
+
+                  <span className="w-0 group-hover:w-3 h-[1px] bg-yellow-400 transition-all duration-300" />
+
+                  <span>
+                    {service.name}
+                  </span>
+                </Link>
               </li>
             ))}
           </ul>
@@ -455,14 +514,14 @@ export default function Footer() {
           <div className="flex items-center gap-6">
 
             <Link
-              href="/privacy"
+              href="/privacy-policy"
               className="hover:text-yellow-400 transition"
             >
               Privacy Policy
             </Link>
 
             <Link
-              href="/terms"
+              href="/terms-and-conditions"
               className="hover:text-yellow-400 transition"
             >
               Terms & Conditions
