@@ -527,27 +527,6 @@ export default function Footer() {
               Terms & Conditions
             </Link>
           </div>
-
-          {/* DEVELOPER CREDIT */}
-
-          <div className="group relative">
-
-            {/* GLOW */}
-
-            <div className="absolute inset-0 bg-yellow-400/20 blur-xl opacity-0 group-hover:opacity-100 transition duration-500 rounded-full" />
-
-            <div className="relative flex items-center gap-2 px-5 py-2 rounded-full bg-white/5 border border-white/10 backdrop-blur-xl hover:border-yellow-400/40 transition-all duration-300">
-
-              <span className="text-gray-400">
-                Developed by
-              </span>
-
-              <span className="font-bold bg-gradient-to-r from-yellow-400 via-orange-400 to-yellow-300 bg-clip-text text-transparent">
-
-                EchoSoul Developer
-              </span>
-            </div>
-          </div>
         </div>
       </div>
     </footer>
